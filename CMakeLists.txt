@@ -37,6 +37,7 @@ set(CMAKE_CXX_STANDARD 17)  # C++17
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS "YES")
 # # Some global settings.
 # if(MSVC)
 #   # Disable some warnings on MSVC.
@@ -70,8 +71,17 @@ target_include_directories(bdcpp PUBLIC "bdcpp/")
 # -----------------------------------
 # Main example application.
 # -----------------------------------
-set(SRC_FILES
+set(example_SRC_FILES
     example.cpp
 )
-add_executable(example ${SRC_FILES})
+add_executable(example ${example_SRC_FILES})
 target_link_libraries(example PRIVATE bdcpp)
+
+find_package(argparse)
+set(bdbr_SRC_FILES
+    bdbr.cpp
+)
+add_executable(bdbr ${bdbr_SRC_FILES})
+target_link_libraries(bdbr PRIVATE bdcpp)
+target_include_directories(bdbr PUBLIC ${argparse_INCLUDE_DIR})
+
